@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quantum-app
+  labels:
+    app: quantum-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quantum-app
+  template:
+    metadata:
+      labels:
+        app: quantum-app
+    spec:
+      containers:
+        - name: quantum-app
+          image: klimentchakarovski/quantum-app:latest  # Will be replaced by SHA
+          ports:
+            - containerPort: 5000
+          env:
+            - name: FLASK_ENV
+              value: "production"
+            - name: QISKIT_SHOTS
+              value: "1024"
