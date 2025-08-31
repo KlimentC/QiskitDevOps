@@ -10,7 +10,7 @@ resources:
 images:
 - name: quantum-app
   newName: klimentchakarovski/quantum-app
-  newTag: 15d2d5366fa0a1f5bbaff136a4dcb1a89398d449
+  newTag: 6a5b0ea0af92dc350bce36a8bf60b9396dc93ee5
 
 commonLabels:
   app: quantum-app
