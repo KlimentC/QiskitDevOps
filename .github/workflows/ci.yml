@@ -50,7 +50,7 @@ jobs:
           IMAGE_TAG=${{ github.sha }}
           docker tag quantum-app:test ${{ secrets.DOCKERHUB_USERNAME }}/quantum-app:$IMAGE_TAG
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@v0.33.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/quantum-app:${{ github.sha }}
           format: 'table'
