@@ -62,12 +62,10 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/quantum-app:${{ github.sha }}
 
   update-kustomization:
-    name: Update Kustomize with new image SHA
     runs-on: ubuntu-latest
     needs: docker-build-and-trivy
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -80,25 +78,14 @@ jobs:
           curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
           sudo mv kustomize /usr/local/bin/
 
-      - name: Check kustomization.yaml exists
-        run: |
-          if [ ! -f deployment/kustomization.yaml ]; then
-            echo "Error: deployment/kustomization.yaml not found!"
-            exit 1
-          fi
-
-      - name: Update kustomization.yaml with new image
-        if: github.ref == 'refs/heads/main'
+      - name: Update kustomization.yaml with new SHA
         run: |
           TAG=${{ github.sha }}
           DOCKER_USER=${{ secrets.DOCKERHUB_USERNAME }}
-          echo "Using commit SHA: $TAG"
           cd deployment
-          # Replace existing image entry
           kustomize edit set image quantum-app=$DOCKER_USER/quantum-app:$TAG
 
       - name: Commit and push kustomization.yaml
-        if: github.ref == 'refs/heads/main'
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
