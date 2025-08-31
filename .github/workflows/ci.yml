@@ -88,21 +88,21 @@ jobs:
           fi
 
       - name: Update kustomization.yaml with new image
-        if: github.ref == 'refs/heads/main'  # Restrict to main branch
+        if: github.ref == 'refs/heads/main'
         run: |
           TAG=${{ github.sha }}
           DOCKER_USER=${{ secrets.DOCKERHUB_USERNAME }}
           echo "Using commit SHA: $TAG"
           cd deployment
-          # Match exactly the name in deployment.yaml and set newName + newTag
-          kustomize edit set image klimentchakarovski/quantum-app=$DOCKER_USER/quantum-app:$TAG
+          # Replace existing image entry
+          kustomize edit set image quantum-app=$DOCKER_USER/quantum-app:$TAG
 
       - name: Commit and push kustomization.yaml
-        if: github.ref == 'refs/heads/main'  # Restrict to main branch
+        if: github.ref == 'refs/heads/main'
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add deployment/kustomization.yaml
           git commit -m "Update kustomization.yaml with new image SHA $TAG" || exit 0
           git pull --rebase --autostash origin main
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+          git push https://x-access-token:${{ secrets.QuantumToken }}@github.com/${{ github.repository }}.git HEAD:main

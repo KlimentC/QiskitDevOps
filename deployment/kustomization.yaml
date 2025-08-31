@@ -4,16 +4,13 @@ kind: Kustomization
 namespace: quantum
 
 resources:
-- deployment.yaml
-- service.yaml
+  - deployment.yaml
+  - service.yaml
 
 images:
-- name: klimentchakarovski/quantum-app
-  newName: klimentchakarovski/quantum-app
-  newTag: e90fd06746824e742b26fc74ae4cc70e6b773ad7
-- name: quantum-app
-  newName: klimentchakarovski/quantum-app
-  newTag: afea72628c71a2b6ed4d74e05fd7b135bae16e34
+  - name: quantum-app       
+    newName: klimentchakarovski/quantum-app
+    newTag: latest 
 
 commonLabels:
   app: quantum-app

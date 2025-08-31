@@ -15,8 +15,8 @@ spec:
         app: quantum-app
     spec:
       containers:
-        - name: quantum-app
-          image: klimentchakarovski/quantum-app:latest  # Will be replaced by SHA
+        - name: quantum-app             
+          image: klimentchakarovski/quantum-app:latest
           ports:
             - containerPort: 5000
           env:
