@@ -91,9 +91,11 @@ jobs:
         if: github.ref == 'refs/heads/main'  # Restrict to main branch
         run: |
           TAG=${{ github.sha }}
+          DOCKER_USER=${{ secrets.DOCKERHUB_USERNAME }}
           echo "Using commit SHA: $TAG"
           cd deployment
-          kustomize edit set image quantum-app=${{ secrets.DOCKERHUB_USERNAME }}/quantum-app:$TAG
+          # Match exactly the name in deployment.yaml and set newName + newTag
+          kustomize edit set image klimentchakarovski/quantum-app=$DOCKER_USER/quantum-app:$TAG
 
       - name: Commit and push kustomization.yaml
         if: github.ref == 'refs/heads/main'  # Restrict to main branch
