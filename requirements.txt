@@ -1,0 +1,9 @@
+qiskit
+qiskit-aer
+matplotlib
+pytest
+Flask
+coverage
+black
+flake8
+numpy
