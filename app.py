@@ -35,21 +35,24 @@ HTML_TEMPLATE = """
 </html>
 """
 
+
 def plot_to_base64(fig):
     """Convert a matplotlib figure to base64-encoded PNG."""
     buf = io.BytesIO()
-    fig.savefig(buf, format='png', bbox_inches='tight')
+    fig.savefig(buf, format="png", bbox_inches="tight")
     plt.close(fig)
     buf.seek(0)
-    return base64.b64encode(buf.getvalue()).decode('utf-8')
+    return base64.b64encode(buf.getvalue()).decode("utf-8")
 
-@app.route('/')
+
+@app.route("/")
 def index():
-    return redirect(url_for('simulate'))
+    return redirect(url_for("simulate"))
 
-@app.route('/simulate', methods=['GET'])
+
+@app.route("/simulate", methods=["GET"])
 def simulate():
-    counts, statevector = run_quantum_simulation(theta=np.pi/4, shots=1024)
+    counts, statevector = run_quantum_simulation(theta=np.pi / 4, shots=1024)
     statevector_list = np.array(statevector).tolist()
 
     histogram_fig = plot_histogram(counts)
@@ -63,8 +66,9 @@ def simulate():
         counts=counts,
         statevector=statevector_list,
         histogram=histogram_b64,
-        state_city=state_city_b64
+        state_city=state_city_b64,
     )
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
