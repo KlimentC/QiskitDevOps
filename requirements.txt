@@ -7,3 +7,4 @@ coverage
 black
 flake8
 numpy
+setuptools>=78.1.1
