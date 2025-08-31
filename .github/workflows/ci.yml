@@ -102,4 +102,4 @@ jobs:
           git add deployment/kustomization.yaml
           git commit -m "Update kustomization.yaml with new image SHA $TAG" || exit 0
           git pull --rebase --autostash origin main
-          git push https://x-access-token:${{ secrets.QuantumToken }}@github.com/${{ github.repository }}.git HEAD:main    
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
